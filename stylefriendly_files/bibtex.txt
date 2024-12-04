@@ -1,0 +1,6 @@
+@article{choi2024stylefriendly,
+  title={Style-Friendly SNR Sampler for Style-Driven Generation}, 
+  author={Jooyoung Choi and Chaehun Shin and Yeongtak Oh and Heeseung Kim and Sungroh Yoon},
+  booktitle={arXiv preprint arxiv:2411.14793},
+  year={2024}
+}

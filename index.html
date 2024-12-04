@@ -1,0 +1,102 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Stylefriendly</title>
+<link href="./stylefriendly_files/style.css" rel="stylesheet">
+<script type="text/javascript" src="./stylefriendly_files/jquery.mlens-1.0.min.js"></script> 
+<script type="text/javascript" src="./stylefriendly_files/jquery.js"></script>
+</head>
+
+<body>
+<div class="content">
+  <h1><strong>Style-Friendly SNR Sampler for Style-Driven Generation</strong></h1>
+  <!-- <p id="authors"><span></span><a href="">Chaehun Shin<sup>1</sup></a> <a href="">Jooyoung Choi<sup>1</sup></a> <a href="">Heeseung Kim<sup>1</sup></a> <a href="">Sungroh Yoon<sup>1,2,*</sup></a>  <br> -->
+  <p id="authors"><span></span><a href="https://scholar.google.com/citations?user=9EIn52wAAAAJ&hl=en&oi=ao">Jooyoung Choi<sup>1,*</sup></a> <a href="https://scholar.google.com/citations?user=M8RX0MEAAAAJ&hl=en&oi=ao">Chaehun Shin<sup>1,*</sup></a> <a href="https://scholar.google.co.kr/citations?user=1251qTIAAAAJ&hl=ko">Yeongtak Oh<sup>1</sup></a> <a href="https://gmltmd789.github.io">Heeseung Kim<sup>1</sup></a> <a href="https://scholar.google.com/citations?user=Bphl_fIAAAAJ&hl=en">Sungroh Yoon<sup>1,2,†</sup></a>  <br>
+  <span style="font-size: 16px"><br>
+    <sup>1</sup> Data Science and AI Laboratory, ECE, Seoul National University <br>
+    <sup>2</sup> AIIS, ASRI, INMC, ISRC, and Interdisciplinary Program in AI, Seoul National University <br>
+    <sup>*</sup> Equal Contribution <sup>†</sup> Corresponding author
+    </p>
+  </span></p>
+  <br>
+  <img src="./stylefriendly_files/figure1.png" class="teaser-gif" style="width:100%;"><br>
+  <h3 style="text-align:center"><em>We propose a Style-friendly SNR sampler that shifts diffusion fine-tuning toward higher noise levels, enabling models to effectively learn new artistic styles and expand the scope of style-driven generation!</em></h3>
+    <font size="+2">
+          <p style="text-align: center;">
+            <!-- <a href="" target="_blank">[Paper]</a> &nbsp;&nbsp;&nbsp;&nbsp; -->
+	          <!-- <a href="" target="_blank">[Code](coming sooon)</a> &nbsp;&nbsp;&nbsp;&nbsp; -->
+            <!-- <a href="" target="_blank">[BibTeX]</a> -->
+            <a href="https://arxiv.org/abs/2411.14793" target="_blank">[Paper]</a>  &nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- <a>[Code]</a>  &nbsp;&nbsp;&nbsp;&nbsp; -->
+            <a>[Code]</a>(<font color="#C70039">Coming Soon!</font>)&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="stylefriendly_files/bibtex.txt" target="_blank">[BibTeX]</a>
+          </p>
+    </font>
+</div>
+<div class="content">
+  <h2 style="text-align:center;">Abstract</h2>
+  <p>Recent large-scale diffusion models generate high-quality images but struggle to learn new, personalized artistic styles, which limits the creation of unique style templates. Fine-tuning with reference images is the most promising approach, but it often blindly utilizes objectives and noise level distributions used for pre-training, leading to suboptimal style alignment. We propose the Style-friendly SNR sampler, which aggressively shifts the signal-to-noise ratio (SNR) distribution toward higher noise levels during fine-tuning to focus on noise levels where stylistic features emerge. This enables models to better capture unique styles and generate images with higher style alignment. Our method allows diffusion models to learn and share new "style templates", enhancing personalized content creation. We demonstrate the ability to generate styles such as personal watercolor paintings, minimal flat cartoons, 3D renderings, multi-panel images, and memes with text, thereby broadening the scope of style-driven generation.</p>
+</div>
+
+<div class="content">
+  <h2>Method</h2>
+  <p> 
+  We observe that stylistic features in text-to-image diffusion models emerge during the early, high-noise stages of the denoising process, characterized by lower signal-to-noise ratio (SNR) values that define noise levels in diffusion models. In the generation process, omitting style descriptions during just the initial 10% of steps hinders the model in capturing the desired styles, even if style prompts are included later.
+  Based on these observations, we propose the Style-friendly SNR sampler, which biases the noise level distribution during the fine-tuning process toward higher noise levels where stylistic features emerge. By shifting the sampling of log-SNR values to focus on lower log-SNR (higher noise) regions critical for style learning, our method enables diffusion models to fine-tune with a strong emphasis on styles across various style templates.
+  </p>
+  <img class="summary-img" src="./stylefriendly_files/figure3.png" style="width:100%;"> <br>
+</div>
+
+<div class="content">
+  <h2>Analysis of Style-Friendly SNR Sampler</h2>
+  <p> 
+    Setting the mean μ of the log-SNR distribution to −6 or lower significantly enhances the ability of diffusion models to capture and reflect reference styles. This adjustment biases the fine-tuning toward higher noise regions where stylistic features emerge more effectively. With μ set to −6, even a low LoRA rank of 4, representing a less complex model configuration, achieves higher style alignment compared to a higher rank of 32 when using the SD3 sampler. This result highlights that focusing on higher noise levels has a more pronounced effect on style learning than increasing model capacity.
+  </p>
+<img class="summary-img" src="./stylefriendly_files/figure6.png" style="width:100%;">
+</div>
+
+<div class="content">
+  <h2>Qualitative Comparison</h2>
+  <p>
+    Style-friendly SNR sampler accurately captures the styles of reference images, reflecting stylistic features such as color schemes, layouts, illumination, and brushstrokes. In contrast, the standard SD3 sampler, DCO, IPAdapter with FLUX-dev, RB-Modulation, and Style-Aligned struggle to capture these key stylistic components or generate artifacts.
+  </p>
+<!-- <img class="summary-img" src="./stylefriendly_files/qual_comp.png" style="width:100%;"> -->
+<img class="summary-img" src="./stylefriendly_files/qual_comp2.jpg" style="width:100%;">
+</div>
+
+<div class="content">
+  <h2>Applications</h2>
+  <p> We expand the scope of style-driven generation by enabling applications such as generating coherent multi-panel images from a single reference and generating customized typography with unique styles.
+  </p>
+<img class="summary-img" src="./stylefriendly_files/figure8.png" style="width:100%;">
+</div>
+
+<!-- <div class="content">
+  <h2>Societal Impact</h2>
+  <p>This project aims to provide users with an effective tool for synthesizing personal subjects (animals, objects) in different contexts. While general text-to-image models might be biased towards specific attributes when synthesizing images from text, our approach enables the user to get a better reconstruction of their desirable subjects. On contrary, malicious parties might try to use such images to mislead viewers. This is a common issue, existing in other generative models approaches or content manipulation techniques. Future research in generative modeling, and specifically of personalized generative priors, must continue investigating and revalidating these concerns.</p>
+  <br>
+</div> -->
+<!-- <div class="content">
+  <h2>BibTex</h2>
+  <code> @article{ruiz2022dreambooth,<br>
+  &nbsp;&nbsp;title={DreamBooth: Fine Tuning Text-to-image Diffusion Models for Subject-Driven Generation},<br>
+  &nbsp;&nbsp;author={Ruiz, Nataniel and Li, Yuanzhen and Jampani, Varun and Pritch, Yael and Rubinstein, Michael and Aberman, Kfir},<br>
+  &nbsp;&nbsp;booktitle={arXiv preprint arxiv:2208.12242},<br>
+  &nbsp;&nbsp;year={2022}<br>
+  } </code> 
+</div> -->
+
+<br><br>
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <!-- <div class="content"> -->
+      website template from <a href="https://dreambooth.github.io/" target="_blank">DreamBooth</a>
+      <!-- </div> -->
+    </div>
+  </div>
+</footer>
+<br><br>
+
+</body>
+</html>
